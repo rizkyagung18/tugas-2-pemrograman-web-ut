@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tracking DO - SITTA</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  <script src="js/dataBahanAjar.js"></script>
+</head>
+<body>
+  <nav>
+    <span class="brand">SITTA / UT</span>
+    <a href="index.html">Beranda</a>
+    <a href="stok.html">Stok Bahan Ajar</a>
+    <a href="tracking.html" class="active">Tracking DO</a>
+  </nav>
+
+  <div id="app" class="page">
+    <h1>Tracking Delivery Order</h1>
+
+    <div class="card">
+      <h2>Tambah Delivery Order</h2>
+      <div class="form-grid">
+        <div class="field">
+          <label>Nomor DO</label>
+          <input type="text" :value="nomorDO" disabled style="background:#eee; color:#888">
+        </div>
+        <div class="field">
+          <label>Tanggal Kirim</label>
+          <input type="date" v-model="form.tanggalKirim" :class="{ error: errors.tanggalKirim }">
+          <span class="error-msg" v-if="errors.tanggalKirim">{{ errors.tanggalKirim }}</span>
+        </div>
+        <div class="field">
+          <label>NIM</label>
+          <input type="text" v-model="form.nim" :class="{ error: errors.nim }" placeholder="Contoh: 123456789">
+          <span class="error-msg" v-if="errors.nim">{{ errors.nim }}</span>
+        </div>
+        <div class="field">
+          <label>Nama</label>
+          <input type="text" v-model="form.nama" :class="{ error: errors.nama }" placeholder="Nama lengkap penerima">
+          <span class="error-msg" v-if="errors.nama">{{ errors.nama }}</span>
+        </div>
+        <div class="field">
+          <label>Ekspedisi</label>
+          <select v-model="form.ekspedisi" :class="{ error: errors.ekspedisi }">
+            <option value="">Pilih ekspedisi</option>
+            <option value="JNE Regular">JNE Regular</option>
+            <option value="JNE Express">JNE Express</option>
+          </select>
+          <span class="error-msg" v-if="errors.ekspedisi">{{ errors.ekspedisi }}</span>
+        </div>
+        <div class="field">
+          <label>Paket Bahan Ajar</label>
+          <select v-model="form.kodePaket" :class="{ error: errors.kodePaket }">
+            <option value="">Pilih paket</option>
+            <option v-for="p in paketList" :key="p.kodePaket" :value="p.kodePaket">
+              {{ p.kodePaket }} - {{ p.namaPaket }}
+            </option>
+          </select>
+          <span class="error-msg" v-if="errors.kodePaket">{{ errors.kodePaket }}</span>
+        </div>
+
+        <div class="full" v-if="paketDipilih">
+          <div class="isi-paket">
+            <strong>Isi paket: {{ paketDipilih.namaPaket }}</strong>
+            <ul>
+              <li v-for="ba in paketDipilih.isi" :key="ba.kode">
+                {{ ba.kode }} &mdash; {{ ba.judul }}
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="full" v-if="form.kodePaket">
+          <div class="field">
+            <label>Total Harga</label>
+            <div class="total-harga-display">{{ formatHarga(totalHarga) }}</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top: 16px">
+        <button @click="tambahDO">Buat Delivery Order</button>
+      </div>
+    </div>
+
+    <h2 style="margin-bottom: 12px">Daftar Delivery Order</h2>
+
+    <div class="badge-count">Total: {{ daftarDO.length }} DO</div>
+
+    <div class="do-list" v-if="daftarDO.length > 0">
+      <div class="do-card" v-for="item in daftarDOUrut" :key="item.nomorDO">
+        <div class="do-header">
+          <span class="do-number">{{ item.nomorDO }}</span>
+          <span class="do-meta">
+            <span>{{ item.ekspedisi }}</span>
+            <span>{{ item.tanggalKirim }}</span>
+          </span>
+        </div>
+        <div class="do-meta">
+          <span>NIM: {{ item.nim }}</span>
+          <span>{{ item.nama }}</span>
+        </div>
+        <div class="do-detail">
+          <div>{{ item.kodePaket }} &mdash; {{ item.namaPaket }}</div>
+          <div v-if="item.isiPaket.length > 0" style="margin-top:6px; font-size:12px; color:#6b6b6b">
+            <span v-for="(ba, i) in item.isiPaket" :key="ba.kode">
+              {{ ba.kode }}<span v-if="i < item.isiPaket.length - 1">, </span>
+            </span>
+          </div>
+          <div style="margin-top:8px">
+            <span class="harga">{{ formatHarga(item.totalHarga) }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="no-data" v-else>
+      BELUM ADA DELIVERY ORDER
+    </div>
+  </div>
+
+  <script src="js/tracking-app.js"></script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SITTA - Sistem Informasi Tiras dan Transaksi Bahan Ajar</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .hero {
+      max-width: 1100px;
+      margin: 80px auto;
+      padding: 0 24px;
+    }
+    .hero h1 {
+      font-size: 28px;
+      border: none;
+      margin-bottom: 8px;
+    }
+    .hero p {
+      color: var(--text-muted);
+      margin-bottom: 40px;
+      font-size: 15px;
+    }
+    .menu-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      max-width: 600px;
+    }
+    .menu-item {
+      display: block;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      padding: 28px 24px;
+      text-decoration: none;
+      color: var(--text);
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .menu-item:hover {
+      border-color: var(--text);
+      background: #f0f0eb;
+    }
+    .menu-item .title {
+      font-family: var(--font);
+      font-size: 13px;
+      letter-spacing: 0.06em;
+      margin-bottom: 6px;
+    }
+    .menu-item .desc {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <span class="brand">SITTA / UT</span>
+    <a href="index.html" class="active">Beranda</a>
+    <a href="stok.html">Stok Bahan Ajar</a>
+    <a href="tracking.html">Tracking DO</a>
+  </nav>
+
+  <div class="hero">
+    <h1>Sistem Informasi Tiras dan Transaksi Bahan Ajar</h1>
+    <p>Universitas Terbuka — Pengelolaan stok dan distribusi bahan ajar</p>
+    <div class="menu-grid">
+      <a href="stok.html" class="menu-item">
+        <div class="title">Stok Bahan Ajar</div>
+        <div class="desc">Lihat dan kelola data stok bahan ajar seluruh UT Daerah</div>
+      </a>
+      <a href="tracking.html" class="menu-item">
+        <div class="title">Tracking Delivery Order</div>
+        <div class="desc">Tambah dan pantau status pengiriman bahan ajar</div>
+      </a>
+    </div>
+  </div>
+</body>
+</html>
